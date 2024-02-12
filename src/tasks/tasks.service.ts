@@ -24,7 +24,7 @@ export class TasksService {
             tasks = tasks.filter(task => task.status === status)
         }
 
-        if(search){
+        if (search) {
             tasks = tasks.filter(task => task.title.includes(search) || task.description.includes(search))
         }
 
@@ -34,7 +34,7 @@ export class TasksService {
     getTaskById(id: string): Task {
         const found = this.tasks.find(task => task.id === id);
 
-        if(!found){
+        if (!found) {
             throw new NotFoundException(`Task with ID "${id}" not found.`);
         }
 
@@ -55,7 +55,8 @@ export class TasksService {
     }
 
     deleteTaskById(id: string): void {
-        this.tasks = this.tasks.filter(task => task.id !== id)
+        const found = this.getTaskById(id)
+        this.tasks = this.tasks.filter(task => task.id !== found.id);
     }
 
     // update task status by ID
